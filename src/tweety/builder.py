@@ -93,6 +93,7 @@ class UrlBuilder:
     URL_AUSER_GET_USER_FOLLOWERS = "https://x.com/i/api/graphql/gwv4MK0diCpAJ79u7op1Lg/Followers"  # noqa
     URL_AUSER_GET_USER_FOLLOWINGS = "https://x.com/i/api/graphql/eWTmcJY3EMh-dxIR7CYTKw/Following"  # noqa
     URL_AUSER_GET_USER_SUBSCRIBERS = "https://x.com/i/api/graphql/LE6RjmjkSMWorQcJu55wFg/UserCreatorSubscriptions"  # noqa
+    URL_AUSER_UPDATE_PROFILE_IMAGE = "https://api.x.com/1.1/account/update_profile_image.json"
     # URL_AUSER_GET_MUTUAL_FRIENDS = "https://x.com/i/api/1.1/friends/following/list.json"  # noqa
     URL_AUSER_GET_MUTUAL_FRIENDS = "https://x.com/i/api/graphql/gwv4MK0diCpAJ79u7op1Lg/Followers"  # noqa
     URL_AUSER_GET_BLOCKED_USERS = "https://x.com/i/api/graphql/sOj2N04S8Mbza3y5M3fOIg/BlockedAccountsAll"  # noqa
@@ -946,6 +947,26 @@ class UrlBuilder:
         data = {'avatar_id': avatar_id}
         url = self.URL_AUSER_UPDATE_GROUP_AVATAR.format(conversation_id)
         return "POST", url, None, None, data
+
+    def update_user_avatar(self, file):
+        params = {
+            'include_profile_interstitial_type': 1,
+            'include_blocking': 1,
+            'include_blocked_by': 1,
+            'include_followed_by': 1,
+            'include_want_retweets': 1,
+            'include_mute_edge': 1,
+            'include_can_dm': 1,
+            'include_can_media_tag': 1,
+            'include_ext_is_blue_verified': 1,
+            'include_ext_verified_type': 1,
+            'include_ext_profile_image_shape': 1,
+            'skip_status': 1,
+            'return_user': 'True',
+            'media_id': file
+        }
+
+        return "POST", self.URL_AUSER_UPDATE_PROFILE_IMAGE, params
 
     def send_typing_indicator(self, conversation_id):
         json_data = {

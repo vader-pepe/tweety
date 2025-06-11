@@ -470,6 +470,20 @@ class UserMethods:
         await self.http.update_conversation_name(conversation_id, name)
         return True
 
+    async def update_user_avatar(self, file: Union[str, UploadedMedia]):
+        """
+        Update the Avatar of the User
+
+        :param file: New Name of the Group
+        :return:
+        """
+
+        file = await self._upload_media(file)
+        file = file[0].media_id
+
+        await self.http.update_user_avatar(file)
+        return True
+
     async def update_conversation_group_avatar(
             self,
             conversation_id: Union[str, int, Conversation],

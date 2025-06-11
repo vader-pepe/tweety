@@ -484,6 +484,12 @@ class Request:
         response = await self.__get_response__(ignore_none_data=True, **request_data)
         return response
 
+    async def update_user_avatar(self, file):
+        request_data = self._builder.update_user_avatar(file)
+        request_data['headers']['content-type'] = f"application/x-www-form-urlencoded"
+        response = await self.__get_response__(ignore_none_data=True, **request_data)
+        return response
+
     async def send_typing_indicator(self, conversation_id):
         request_data = self._builder.send_typing_indicator(conversation_id)
         response = await self.__get_response__(**request_data)
